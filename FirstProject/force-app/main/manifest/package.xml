@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>Lead_Management</members>
+		<name>CustomApplication</name>
+	</types>
+	<types>
+		<members>Lead.Does_Skills_Meets_Program__c</members>
+		<members>Lead.Help_Description__c</members>
+		<members>Lead.NumberofLocations__c</members>
+		<members>Lead.Outreach_Count__c</members>
+		<members>Lead.Skills_Description__c</members>
+		<members>Lead.Successful_Outreaches_Count__c</members>
+		<members>Lead.Successful_Outreaches_Percentage__c</members>
+		<members>Outreach__c.Communication_Method__c</members>
+		<members>Outreach__c.Date_of_Outreach__c</members>
+		<members>Outreach__c.Duration__c</members>
+		<members>Outreach__c.Lead__c</members>
+		<members>Outreach__c.Notes__c</members>
+		<members>Outreach__c.Outcome__c</members>
+		<name>CustomField</name>
+	</types>
+	<types>
+		<members>Lead</members>
+		<members>Outreach__c</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>Outreach__c</members>
+		<name>CustomTab</name>
+	</types>
+	<types>
+		<members>Lead-Help Program Layout</members>
+		<members>Lead-Skill Program Layout</members>
+		<members>Outreach__c-Outreach Layout</members>
+		<name>Layout</name>
+	</types>
+	<types>
+		<members>Outreach__c.All</members>
+		<name>ListView</name>
+	</types>
+	<types>
+		<members>Lead_Management_Manager_Access</members>
+		<members>Lead_Management_Staff_Access</members>
+		<name>PermissionSet</name>
+	</types>
+	<types>
+		<members>ProgPlan Standard User</members>
+		<name>Profile</name>
+	</types>
+	<types>
+		<members>Lead.Help_Program_Lead</members>
+		<members>Lead.Skill_Program_Lead</members>
+		<name>RecordType</name>
+	</types>
+	<version>60.0</version>
+</Package>
