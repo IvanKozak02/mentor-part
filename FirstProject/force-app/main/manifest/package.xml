@@ -53,5 +53,10 @@
 		<members>Lead.Skill_Program_Lead</members>
 		<name>RecordType</name>
 	</types>
+	<types>
+		<members>Outreaches_Rollup_Outreaches_Values</members>
+		<members>Outreaches_Rollup_Outreaches_Values_Delete</members>
+		<name>Flow</name>
+	</types>
 	<version>60.0</version>
 </Package>
