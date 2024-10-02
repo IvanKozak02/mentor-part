@@ -18,7 +18,7 @@
             </value>
             <value>
                 <fullName>Phone</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Phone</label>
             </value>
             <value>
