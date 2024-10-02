@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Num_Of_Emps_Must_Be_Greater_Than_Zero</fullName>
+    <active>true</active>
+    <errorConditionFormula>NumberOfEmployees &lt; 0</errorConditionFormula>
+    <errorDisplayField>NumberOfEmployees</errorDisplayField>
+    <errorMessage>Number of employees must be greater than zero</errorMessage>
+</ValidationRule>
