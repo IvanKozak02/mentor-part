@@ -146,13 +146,13 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Outreach_Count__c</field>
+            <field>Count_Of_Outreaches__c</field>
             <value>
                 <elementReference>outreachesCount</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Successful_Outreaches_Count__c</field>
+            <field>Count_of_successful_Outreaches__c</field>
             <value>
                 <elementReference>successfulOutreachesCount</elementReference>
             </value>
