@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingOwnerRules>
-        <fullName>Lead_Management_Team_Edit_Access</fullName>
+        <fullName>Lead_Management_Team_Edit_Outreach_Access</fullName>
         <accessLevel>Edit</accessLevel>
-        <label>Lead Management Team Edit Access</label>
+        <description>Share access for Outreach records between users in Lead Management</description>
+        <label>Lead Management Team Edit Outreach Access</label>
         <sharedTo>
             <group>Lead_Management_Team</group>
         </sharedTo>
         <sharedFrom>
-            <role>Lead_Management</role>
+            <group>Lead_Management_Team</group>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>

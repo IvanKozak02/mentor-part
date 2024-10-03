@@ -3,12 +3,13 @@
     <sharingOwnerRules>
         <fullName>Lead_Management_Team_Edit_Access</fullName>
         <accessLevel>Edit</accessLevel>
+        <description>Share access across Lead Management users</description>
         <label>Lead Management Team Edit Access</label>
         <sharedTo>
             <group>Lead_Management_Team</group>
         </sharedTo>
         <sharedFrom>
-            <role>Lead_Management</role>
+            <group>Lead_Management_Team</group>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>
