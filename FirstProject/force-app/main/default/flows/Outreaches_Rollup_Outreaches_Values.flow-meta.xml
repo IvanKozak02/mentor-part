@@ -1,47 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
-    <assignments>
-        <name>Increment_Overall_Outreach_Count</name>
-        <label>Increment Overall Outreach Count</label>
-        <locationX>270</locationX>
-        <locationY>947</locationY>
-        <assignmentItems>
-            <assignToReference>outreachesCount</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <numberValue>1.0</numberValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Through_Outreach_Records</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Increment_Successful_Outreach</name>
-        <label>Increment Successful Outreach</label>
-        <locationX>138</locationX>
-        <locationY>755</locationY>
-        <assignmentItems>
-            <assignToReference>successfulOutreachesCount</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <numberValue>1.0</numberValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Increment_Overall_Outreach_Count</targetReference>
-        </connector>
-    </assignments>
     <decisions>
-        <name>New_Outreach_Created_Or_Outreach_Outcome_Change_To_Accepted</name>
-        <label>New Outreach Created Or Outreach Outcome Change To Accepted?</label>
-        <locationX>182</locationX>
+        <name>Outreach_Was_Changed</name>
+        <label>Outreach Was Changed?</label>
+        <locationX>314</locationX>
         <locationY>323</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>Yes2</name>
-            <conditionLogic>or</conditionLogic>
+            <name>Outreach_Created_Or_Outreach_Outcome_Change_To_Accepted</name>
+            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record__Prior.Id</leftValueReference>
                 <operator>IsNull</operator>
@@ -51,65 +19,49 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.Outcome__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Lead__r.Id</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Accepted</stringValue>
+                    <elementReference>$Record__Prior.Lead__r.Id</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Other_Outreaches</targetReference>
+                <targetReference>Calculate_Lead_Outreaches_Statistic</targetReference>
             </connector>
-            <label>Yes</label>
+            <label>Outreach Created Or Outreach Outcome Change To Accepted</label>
         </rules>
-    </decisions>
-    <decisions>
-        <name>Outreach_is_successful</name>
-        <label>Outreach is successful?</label>
-        <locationX>270</locationX>
-        <locationY>647</locationY>
-        <defaultConnector>
-            <targetReference>Increment_Overall_Outreach_Count</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>Yes</name>
+            <name>Outreach_Lead_Was_Updated</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Loop_Through_Outreach_Records.Outcome__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>$Record.Lead__r.Id</leftValueReference>
+                <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>Accepted</stringValue>
+                    <elementReference>$Record__Prior.Lead__r.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Increment_Successful_Outreach</targetReference>
+                <targetReference>Recalculate_New_Lead_Outreaches_Statistic</targetReference>
             </connector>
-            <label>Yes</label>
+            <label>Outreach Lead Was Updated</label>
         </rules>
     </decisions>
     <environments>Default</environments>
-    <formulas>
-        <name>successfulOutreachesPercentage</name>
-        <dataType>Number</dataType>
-        <expression>(100 * {!successfulOutreachesCount}) / {!outreachesCount}</expression>
-        <scale>0</scale>
-    </formulas>
     <interviewLabel>Outreaches - Rollup {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Outreaches - Rollup Outreaches Values</label>
-    <loops>
-        <name>Loop_Through_Outreach_Records</name>
-        <label>Loop Through Outreach Records</label>
-        <locationX>50</locationX>
-        <locationY>539</locationY>
-        <collectionReference>Get_Other_Outreaches</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Outreach_is_successful</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Update_Lead</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -129,71 +81,59 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>Get_Other_Outreaches</name>
-        <label>Get Other Outreaches</label>
-        <locationX>50</locationX>
-        <locationY>431</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Loop_Through_Outreach_Records</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Lead__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Lead__r.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>Outreach__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordUpdates>
-        <name>Update_Lead</name>
-        <label>Update Lead</label>
-        <locationX>50</locationX>
-        <locationY>1139</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Lead__r.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Count_Of_Outreaches__c</field>
-            <value>
-                <elementReference>outreachesCount</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Count_of_successful_Outreaches__c</field>
-            <value>
-                <elementReference>successfulOutreachesCount</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Successful_Outreaches_Percentage__c</field>
-            <value>
-                <elementReference>successfulOutreachesPercentage</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Lead</object>
-    </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>New_Outreach_Created_Or_Outreach_Outcome_Change_To_Accepted</targetReference>
+            <targetReference>Outreach_Was_Changed</targetReference>
         </connector>
         <object>Outreach__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Calculate_Lead_Outreaches_Statistic</name>
+        <label>Calculate Lead Outreaches Statistic</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <flowName>Calculate_Outreaches_Statistic</flowName>
+        <inputAssignments>
+            <name>leadId</name>
+            <value>
+                <elementReference>$Record.Lead__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Recalculate_New_Lead_Outreaches_Statistic</name>
+        <label>Recalculate New Lead Outreaches Statistic</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <connector>
+            <targetReference>Recalculate_Old_Lead_Outreaches_Statistic</targetReference>
+        </connector>
+        <flowName>Calculate_Outreaches_Statistic</flowName>
+        <inputAssignments>
+            <name>leadId</name>
+            <value>
+                <elementReference>$Record.Lead__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Recalculate_Old_Lead_Outreaches_Statistic</name>
+        <label>Recalculate Old Lead Outreaches Statistic</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <flowName>Calculate_Outreaches_Statistic</flowName>
+        <inputAssignments>
+            <name>leadId</name>
+            <value>
+                <elementReference>$Record__Prior.Lead__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>currentItem_Filter_For_Successful_Outreaches</name>
         <dataType>SObject</dataType>
@@ -201,27 +141,5 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Outreach__c</objectType>
-    </variables>
-    <variables>
-        <name>outreachesCount</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
-        <value>
-            <numberValue>0.0</numberValue>
-        </value>
-    </variables>
-    <variables>
-        <name>successfulOutreachesCount</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
-        <value>
-            <numberValue>0.0</numberValue>
-        </value>
     </variables>
 </Flow>
