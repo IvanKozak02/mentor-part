@@ -8,7 +8,7 @@
         <locationY>323</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>Outreach_Created_Or_Outreach_Outcome_Change_To_Accepted</name>
+            <name>Outreach_Created_Or_Outreach_Outcome_Changed</name>
             <conditionLogic>1 OR (2 AND 3)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record__Prior.Id</leftValueReference>
@@ -34,7 +34,7 @@
             <connector>
                 <targetReference>Calculate_Lead_Outreaches_Statistic</targetReference>
             </connector>
-            <label>Outreach Created Or Outreach Outcome Change To Accepted</label>
+            <label>Outreach Created Or Outreach Outcome Changed</label>
         </rules>
         <rules>
             <name>Outreach_Lead_Was_Updated</name>
