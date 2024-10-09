@@ -2,10 +2,11 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Successful_Outreaches_Percentage__c</fullName>
     <externalId>false</externalId>
+    <formula>Count_of_successful_Outreaches__c / Count_Of_Outreaches__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Successful Outreaches Percentage</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
-    <trackFeedHistory>false</trackFeedHistory>
     <type>Percent</type>
 </CustomField>
