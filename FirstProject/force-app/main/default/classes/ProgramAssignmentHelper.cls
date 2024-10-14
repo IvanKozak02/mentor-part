@@ -28,9 +28,12 @@ public static void updateRelatedProgramAssignments(Set<Id> Ids, String fieldName
         }
     }
 
+    TriggerHandler.bypass('ProgramAssignmentTriggerHandler');       // to prevent beforeUpdate() method in ProgramAssignmentTriggerHandler being invoked
     if (!pas.isEmpty()) {
         update pas;
     }
+    TriggerHandler.clearBypass('ProgramAssignmentTriggerHandler');
+
 }
 
 
