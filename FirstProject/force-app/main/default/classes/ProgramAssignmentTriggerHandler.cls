@@ -38,13 +38,13 @@ public with sharing class ProgramAssignmentTriggerHandler extends TriggerHandler
                 ProgramAssignmentHelper.generatePAName(pa, paContactName, paProgramName);
                 return;
             }
-            if (oldPA.Start_Date__c != pa.Start_Date__c) {
+            if (oldPA.Start_Date__c != pa.Start_Date__c && pa.Autoname__c) {
                 ProgramAssignmentHelper.updatePAStartDate(pa);
             }
-            if (oldPA.Contact__c != pa.Contact__c) {
+            if (oldPA.Contact__c != pa.Contact__c && pa.Autoname__c) {
                 ProgramAssignmentHelper.updatePAContactName(pa, paContactName);
             }
-            if (oldPA.Program__c != pa.Program__c) {
+            if (oldPA.Program__c != pa.Program__c && pa.Autoname__c) {
                 ProgramAssignmentHelper.updatePAProgramName(pa, paProgramName);
             }
         }
