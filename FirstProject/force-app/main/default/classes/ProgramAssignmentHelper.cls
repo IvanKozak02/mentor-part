@@ -10,6 +10,17 @@ public static void generatePAName(Program_Assignment__c pa, String contactName, 
     
 }
 
+public static void collectContactAndProgramIdsForPAs(List<Program_Assignment__c> newPas, Set<Id> paContactIds, Set<Id> paProgramIds) {
+    for (Program_Assignment__c pa : newPas) {
+        if (pa.Contact__c != null) {
+            paContactIds.add(pa.Contact__c);
+        }
+        if (pa.Program__c != null) {
+            paProgramIds.add(pa.Program__c);
+        }
+    }
+}
+
 public static void updateRelatedProgramAssignments(Set<Id> Ids, String fieldName){
     if (ids.isEmpty()) {
         return; 

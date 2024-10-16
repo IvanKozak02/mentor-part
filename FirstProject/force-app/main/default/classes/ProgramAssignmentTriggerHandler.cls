@@ -12,17 +12,9 @@ public with sharing class ProgramAssignmentTriggerHandler extends TriggerHandler
 
     public override void beforeInsert(){
         
-        Set<Id> paContactIds = new Set<Id>();               // Винести в окремий метод
+        Set<Id> paContactIds = new Set<Id>();           
         Set<Id> paProgramIds = new Set<Id>();
-
-        for (Program_Assignment__c pa : newProgramAssignments) {
-            if (pa.Contact__c != null) {
-                paContactIds.add(pa.Contact__c);
-            }
-            if (pa.Program__c != null) {
-                paProgramIds.add(pa.Program__c);                
-            }
-         }
+        ProgramAssignmentHelper.collectContactAndProgramIdsForPAs(newProgramAssignments,paContactIds, paProgramIds);
 
          Map<Id, Contact> paContacts = SOQLHelper.getPAContacts(paContactIds);
          Map<Id, Program__c> paPrograms = SOQLHelper.getPAPrograms(paProgramIds);
@@ -38,18 +30,9 @@ public with sharing class ProgramAssignmentTriggerHandler extends TriggerHandler
 
     public override void beforeUpdate(){
 
-        Set<Id> paContactIds = new Set<Id>();               // Винести в окремий метод
+        Set<Id> paContactIds = new Set<Id>();               
         Set<Id> paProgramIds = new Set<Id>();
-
-        for (Program_Assignment__c pa : newProgramAssignments) {
-            if (pa.Contact__c != null) {
-                paContactIds.add(pa.Contact__c);
-            }
-            if (pa.Program__c != null) {
-                paProgramIds.add(pa.Program__c);                
-            }
-         }
-
+        ProgramAssignmentHelper.collectContactAndProgramIdsForPAs(newProgramAssignments,paContactIds, paProgramIds);
 
         Map<Id, Contact> paContacts = SOQLHelper.getPAContacts(paContactIds);
         Map<Id, Program__c> paPrograms = SOQLHelper.getPAPrograms(paProgramIds);
