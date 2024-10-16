@@ -20,7 +20,7 @@ public with sharing class ProgramAssignmentTriggerHandler extends TriggerHandler
                 paContactIds.add(pa.Contact__c);
             }
             if (pa.Program__c != null) {
-                paProgramIds.add(pa.Contact__c);                
+                paProgramIds.add(pa.Program__c);                
             }
          }
 
@@ -46,7 +46,7 @@ public with sharing class ProgramAssignmentTriggerHandler extends TriggerHandler
                 paContactIds.add(pa.Contact__c);
             }
             if (pa.Program__c != null) {
-                paProgramIds.add(pa.Contact__c);                
+                paProgramIds.add(pa.Program__c);                
             }
          }
 
@@ -63,6 +63,9 @@ public with sharing class ProgramAssignmentTriggerHandler extends TriggerHandler
             if (!oldPA.Autoname__c && pa.Autoname__c) {
                 ProgramAssignmentHelper.generatePAName(pa, paContactName, paProgramName);
                 return;
+            }
+            if (oldPA.Name != pa.Name && pa.Autoname__c) {
+                ProgramAssignmentHelper.generatePAName(pa, paContactName, paProgramName);
             }
             if (oldPA.Start_Date__c != pa.Start_Date__c && pa.Autoname__c) {
                 ProgramAssignmentHelper.generatePAName(pa, paContactName, paProgramName);
