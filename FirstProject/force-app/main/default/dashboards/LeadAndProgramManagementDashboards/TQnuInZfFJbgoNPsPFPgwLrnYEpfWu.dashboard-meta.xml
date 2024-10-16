@@ -66,11 +66,9 @@
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartAxisRange>Auto</chartAxisRange>
                 <chartSummary>
-                    <aggregate>Sum</aggregate>
                     <axisBinding>y</axisBinding>
-                    <column>Lead.Count_Of_Outreaches__c</column>
+                    <column>FORMULA1</column>
                 </chartSummary>
-                <componentChartTheme>dark</componentChartTheme>
                 <componentType>Funnel</componentType>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
@@ -78,17 +76,16 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>LEAD_ID</groupingColumn>
+                <groupingColumn>Lead$Id</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
-                        <sortColumn>s!Lead.Count_Of_Outreaches__c</sortColumn>
-                        <sortOrder>d</sortOrder>
+                        <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
                 <header>Count of Outreaches per Lead</header>
                 <legendPosition>Right</legendPosition>
-                <report>LeadmanagementReports/Count_of_Outreaches_per_Lead_JO3</report>
+                <report>LeadmanagementReports/Count_of_Outreaches_per_Lead_v2_li0</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>

@@ -23,9 +23,15 @@
         <criteriaItems>
             <column>Outcome__c</column>
             <isUnlocked>false</isUnlocked>
-            <operator>notEqual</operator>
+            <operator>equals</operator>
             <value>Responded</value>
         </criteriaItems>
+        <operation>without</operation>
+        <primaryTableColumn>LEAD_ID</primaryTableColumn>
+        <relatedTable>Outreach__c</relatedTable>
+        <relatedTableJoinColumn>Lead__c</relatedTableJoinColumn>
+    </crossFilters>
+    <crossFilters>
         <operation>with</operation>
         <primaryTableColumn>LEAD_ID</primaryTableColumn>
         <relatedTable>Outreach__c</relatedTable>
