@@ -28,16 +28,16 @@ private class ProgramTriggerHandlerTest {
 
         List<Program_Assignment__c> pasDenied = TestDataFactory.createMultipleProgramAssignments(testContact.Id, testProgram.Id, 'Completed', 5);
 
-        Test.startTest();
+
         try {
+            Test.startTest();
             delete testProgram;
+            Test.stopTest();
             System.assert(false, 'Expected a DMLException to be thrown due to assignments with non-allowed statuses.');
         } catch (DmlException e) {
             System.debug(e.getMessage());
             System.assert(e.getMessage().contains('Cannot Delete Program because it has PAs with Status Completed'));
         }
-        Test.stopTest();
-
     }
 
     @isTest
