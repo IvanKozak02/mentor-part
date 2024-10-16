@@ -14,8 +14,7 @@ private class ProgramAssignmentTriggerHandlerTest {
         );
 
         Test.startTest();
-        insert pa1;
-        insert pa2;
+        insert new List<Program_Assignment__c>{pa1, pa2};
         Test.stopTest();
 
         Program_Assignment__c insertedPA1 = [SELECT Name, Start_Date__c FROM Program_Assignment__c WHERE Id = :pa1.Id];
@@ -39,14 +38,12 @@ private class ProgramAssignmentTriggerHandlerTest {
         Program_Assignment__c pa2 = TestDataFactory.createTestProgramAssignment(
             testContact.Id, testProgram.Id, Date.today(), 'Applied',true
         );
-        insert pa1;
-        insert pa2;
+        insert new List<Program_Assignment__c>{pa1, pa2};
 
         Test.startTest();
         pa1.Start_Date__c = Date.today();
         pa2.Start_Date__c = null;
-        update pa1;
-        update pa2;
+        update new List<Program_Assignment__c>{pa1, pa2};
         Test.stopTest();
         
         Program_Assignment__c updatedPA1 = [SELECT Name FROM Program_Assignment__c WHERE Id = :pa1.Id];
