@@ -12,7 +12,7 @@ public with sharing class ProgramAssignmentTriggerHandler extends TriggerHandler
 
     public override void beforeInsert(){
         
-        Set<Id> paContactIds = new Set<Id>();
+        Set<Id> paContactIds = new Set<Id>();               // Винести в окремий метод
         Set<Id> paProgramIds = new Set<Id>();
 
         for (Program_Assignment__c pa : newProgramAssignments) {
@@ -24,8 +24,8 @@ public with sharing class ProgramAssignmentTriggerHandler extends TriggerHandler
             }
          }
 
-         Map<Id, Contact> paContacts = SOQLHelper.getPAContacts(newProgramAssignments);
-         Map<Id, Program__c> paPrograms = SOQLHelper.getPAPrograms(newProgramAssignments);
+         Map<Id, Contact> paContacts = SOQLHelper.getPAContacts(paContactIds);
+         Map<Id, Program__c> paPrograms = SOQLHelper.getPAPrograms(paProgramIds);
 
         for (Program_Assignment__c pa : newProgramAssignments) {
              if(pa.Autoname__c){
@@ -37,9 +37,22 @@ public with sharing class ProgramAssignmentTriggerHandler extends TriggerHandler
      }
 
     public override void beforeUpdate(){
-        Map<Id, Contact> paContacts = SOQLHelper.getPAContacts(newProgramAssignments);
-        Map<Id, Program__c> paPrograms = SOQLHelper.getPAPrograms(newProgramAssignments);
 
+        Set<Id> paContactIds = new Set<Id>();               // Винести в окремий метод
+        Set<Id> paProgramIds = new Set<Id>();
+
+        for (Program_Assignment__c pa : newProgramAssignments) {
+            if (pa.Contact__c != null) {
+                paContactIds.add(pa.Contact__c);
+            }
+            if (pa.Program__c != null) {
+                paProgramIds.add(pa.Contact__c);                
+            }
+         }
+
+
+        Map<Id, Contact> paContacts = SOQLHelper.getPAContacts(paContactIds);
+        Map<Id, Program__c> paPrograms = SOQLHelper.getPAPrograms(paProgramIds);
 
         for (Program_Assignment__c pa : newProgramAssignments) {
             Program_Assignment__c oldPA = oldProgramAssignmentsMap.get(pa.Id);
@@ -52,13 +65,13 @@ public with sharing class ProgramAssignmentTriggerHandler extends TriggerHandler
                 return;
             }
             if (oldPA.Start_Date__c != pa.Start_Date__c && pa.Autoname__c) {
-                ProgramAssignmentHelper.updatePAStartDate(pa);
+                ProgramAssignmentHelper.generatePAName(pa, paContactName, paProgramName);
             }
             if (oldPA.Contact__c != pa.Contact__c && pa.Autoname__c) {
-                ProgramAssignmentHelper.updatePAContactName(pa, paContactName);
+                ProgramAssignmentHelper.generatePAName(pa, paContactName, paProgramName);
             }
             if (oldPA.Program__c != pa.Program__c && pa.Autoname__c) {
-                ProgramAssignmentHelper.updatePAProgramName(pa, paProgramName);
+                ProgramAssignmentHelper.generatePAName(pa, paContactName, paProgramName);
             }
         }
     }
