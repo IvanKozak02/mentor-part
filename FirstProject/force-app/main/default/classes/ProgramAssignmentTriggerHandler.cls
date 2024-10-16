@@ -11,6 +11,19 @@ public with sharing class ProgramAssignmentTriggerHandler extends TriggerHandler
 
 
     public override void beforeInsert(){
+        
+        Set<Id> paContactIds = new Set<Id>();
+        Set<Id> paProgramIds = new Set<Id>();
+
+        for (Program_Assignment__c pa : newProgramAssignments) {
+            if (pa.Contact__c != null) {
+                paContactIds.add(pa.Contact__c);
+            }
+            if (pa.Program__c != null) {
+                paProgramIds.add(pa.Contact__c);                
+            }
+         }
+
          Map<Id, Contact> paContacts = SOQLHelper.getPAContacts(newProgramAssignments);
          Map<Id, Program__c> paPrograms = SOQLHelper.getPAPrograms(newProgramAssignments);
 
