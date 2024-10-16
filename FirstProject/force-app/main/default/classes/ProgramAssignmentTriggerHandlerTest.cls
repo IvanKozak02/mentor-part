@@ -108,6 +108,24 @@ private class ProgramAssignmentTriggerHandlerTest {
         String expectedName = 'Test Contact 0' + ' - ' + 'Test Program 0' + ' : ' + Date.Today().format();
         System.assertEquals(expectedName, updatedPA.Name, 'PA Name should be generated after Autoname was enabled');
     }
-    
+
+
+    @isTest
+    private static void testBeforeUpdate_NameChanged() {
+        Contact testContact = TestDataFactory.createContacts(1)[0];
+        Program__c testProgram = TestDataFactory.createPrograms(1)[0];
+        Program_Assignment__c pa = TestDataFactory.createTestProgramAssignment(testContact.Id, testProgram.Id, Date.Today(), 'Applied', true);
+        insert pa;
+
+        Test.startTest();
+        pa.Name = 'TPA 0';
+        update pa;
+        Test.stopTest();
+        
+        Program_Assignment__c updatedPA = [SELECT Name FROM Program_Assignment__c WHERE Id = :pa.Id];     
+
+        String expectedName = 'Test Contact 0' + ' - ' + 'Test Program 0' + ' : ' + Date.Today().format();
+        System.assertEquals(expectedName, updatedPA.Name, 'PA Name should not be generated if Autoname is not checked and');
+    }
     
 }
