@@ -43,5 +43,40 @@ public class TestDataFactory {
         insert programAssignments;
         return programAssignments;
     }
+
+    public static List<Outreach__c> createOutreachesWithPresetLeadAndOutcome(Integer countOfOutreaches, Id leadId, String outcome){
+        List<Outreach__c> testOutreaches = new List<Outreach__c>();
+        
+        for (Integer i = 0; i < countOfOutreaches; i++) {
+            testOutreaches.add(new Outreach__c(
+                Outcome__c=outcome, 
+                Lead__c=leadId, 
+                Communication_Method__c='Email'));
+        }
+
+        return testOutreaches;
+    }
+
+    public static Lead createSingleLead(){
+        return new Lead(
+            LastName = 'Test Lead 1',
+            Company = 'Test Company',
+            Need_Attention__c = false,
+            Status = 'New'
+        );
+    }
+
+    public static List<Lead> createMultipleLeadsWithPresetNeedAttention(Integer countOfLeads,Boolean needAttention){
+        List<Lead> testLeads = new List<Lead>();
+        for (Integer i = 0; i < countOfLeads; i++) {
+            testLeads.add(new Lead(
+                LastName = 'Test Lead ' + i,
+                Company = 'Test Company',
+                Need_Attention__c = needAttention,
+                Status = 'New'
+            ));
+        }
+        return testLeads;
+    }
     
 }
