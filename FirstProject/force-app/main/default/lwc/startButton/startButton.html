@@ -1,0 +1,18 @@
+<template>
+    <lightning-card title="Start External Lead data screen flow">
+        <lightning-button
+        if:false={renderFlow}
+        variant="brand"
+        label="Start"
+        disable-animation
+        class="slds-m-left_x-small slds-align_absolute-center slds-p-top_xx-small"
+        onclick={handleClick}>
+    </lightning-button>
+
+    <lightning-flow if:true={renderFlow}
+        flow-api-name={flowApiName}
+        onstatuschange={handleFlowStatusChange}>
+    </lightning-flow>
+    </lightning-card>
+
+</template>
