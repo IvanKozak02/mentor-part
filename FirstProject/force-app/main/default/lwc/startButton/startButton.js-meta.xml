@@ -6,4 +6,10 @@
         <target>lightning__HomePage</target>
         <target>lightning__AppPage</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage, lightning__AppPage">
+            <property name="flowApiName" label="Flow Name" type="String"/>
+            <property name="title" label="Title Name" type="String"/>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

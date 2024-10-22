@@ -1,8 +1,9 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
 export default class StartButton extends LightningElement {
 
-    flowApiName='Screen_External_Lead_Data';
+    @api flowApiName='Screen_External_Lead_Data';
+    @api title = "Start External Lead data screen flow";
     renderFlow = false;
 
     handleFlowStatusChange(e){
