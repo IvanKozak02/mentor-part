@@ -1,0 +1,78 @@
+<template>
+    <lightning-map 
+            map-markers={mapMarkers}
+            onmarkerselect={handleMarkerSelect}
+            onclick={handleClick}
+        >
+    </lightning-map>
+    <lightning-card title="Enter Address To Add Marker to the Map">
+        <form action="" id="address-form" onsubmit={handleAddClick}>
+            <div class="slds-m-around_medium slds-m-bottom_x-large">
+                <lightning-input type="text" label="Title" required name="title"></lightning-input>
+                <lightning-input type="text" label="City" required name="city"></lightning-input>
+                <lightning-input type="text" label="Country" required name="country"></lightning-input>
+                <lightning-input type="text" label="Street" name="street"></lightning-input>
+                <lightning-input type="text" label="Postal code" name="postalCode"></lightning-input>
+            <div class="slds-p-top_medium slds-grid slds-grid_align-end">
+                <lightning-button variant="brand-outline" label="Clear" title="Primary action with lighter look" onclick={handleClearClick} class="slds-m-left_x-small"></lightning-button>
+                <lightning-button type="submit" variant="brand" label="Add" title="Primary action" class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </div>
+        </form>
+
+    </lightning-card>
+    <template lwc:if={renderWeatherData}>
+        <lightning-card title={title}>
+            <div class="c-container">
+                <lightning-layout style="align-items: center;">
+                    <lightning-layout-item padding="around-small">
+                        <p>Overall weather: </p>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small">
+                        <p class="field-title" title="weather">Weather</p>
+                        <p>{weatherDescription.main}</p>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small">
+                        <p class="field-title" title="weather description">Weather Description</p>
+                        <p>{weatherDescription.mainDescription}</p>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small">
+                        <img src={weatherDescription.imageSrc} alt="weather image"/>
+                    </lightning-layout-item>
+                    
+                </lightning-layout>
+                <lightning-layout>
+                    <lightning-layout-item padding="around-small">
+                        <div class="header-column">
+                            <p class="field-title" title="Field 1">Temperature</p>
+                            <p>{weatherDescription.temperature}</p>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small">
+                        <div class="header-column">
+                            <p class="field-title" title="Field2 (3)">Pressure</p>
+                            <p>{weatherDescription.pressure}</p>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small">
+                        <div class="header-column">
+                            <p class="field-title" title="Field 3">Humidity</p>
+                            <p>{weatherDescription.humidity}</p>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <div class="slds-p-around_medium slds-grid slds-grid_align-end">
+                    <lightning-button variant="brand" onclick={handleHideClick} label="Hide Weather" title="Primary action" class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+
+    <template if:true={error}>
+        <lightning-card title="Error">
+            <h2 class="slds-p-around_medium">Something went wrong...</h2>
+        </lightning-card>
+    </template>
+   
+   
+</template>
