@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Generate Invoice" class="slds-scrollable_none">
+        <div class="slds-p-around_small">
+            <div class="slds-m-around_medium"> 
+                <lightning-input required="true" class="slds-m-bottom_small" name="startDate" type="date" label="Start Date" value={startDate} onchange={handleDateChange}></lightning-input>
+                <lightning-input required="true" class="slds-m-bottom_small" name="endDate" type="date" label="End Date" value={endDate} onchange={handleDateChange}></lightning-input>
+                <lightning-input class="slds-m-bottom_small" type="checkbox" label="Include Non-billable SD?" checked={includeNonBillable} onchange={handleNonBillableStatusChange}></lightning-input>
+            </div>
+            <footer class="slds-m-around_medium slds-grid  slds-grid_align-end">
+                <lightning-button variant="neutral" label="Close" onclick={handleClose}></lightning-button>
+                <lightning-button class="slds-m-left_small" variant="brand" label="Generate Invoice" onclick={handleGenerateInvoice}></lightning-button>
+            </footer>
+        </div>
+    </lightning-card>
+</template>

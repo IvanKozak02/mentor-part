@@ -1,0 +1,57 @@
+<apex:page controller="PDFSdController" renderAs="pdf">
+    <apex:stylesheet value="{!$Resource.PDFStyles}" />
+    <table style="font-family: sans-serif padding-bottom: 30px">
+        <tr>
+            <td><apex:image id="app-logo" value="{!$Resource.App_Logo}" width="60" height="60"/></td>
+            <td style="font:20pt; padding-left:10px; padding-right:150px">Program Management</td>
+            <td style="font:20pt;">INVOICE</td>
+        </tr>
+    </table>
+
+    <table style="border: 0.5px solid #fff; font-family: sans-serif; width: 100%;">
+        <tr>
+            <td style="padding-top: 30px; padding-left: 10px;">
+                <span style="padding-right: 5px;">Date:</span>
+                <apex:outputText value="{!DAY(TODAY())}.{!MONTH(TODAY())}.{!YEAR(TODAY())}"/>
+            </td>
+            <td style="font-size: 16pt; padding-top: 30px; text-align: right;">
+                Service Deliveries Between
+            </td>
+        </tr>
+        
+        <tr>
+            <td colspan="2" style="padding-top: 20px; text-align: right; padding-right: 10px;">
+                <span style="padding-right: 19px;">SD Start Date:</span>
+                <apex:outputText value="{!startDateFormat}" />
+            </td>
+        </tr>
+        
+        <tr>
+            <td colspan="2" style="padding-top: 20px; text-align: right; padding-right: 10px;">
+                <span style="padding-right: 20px;">SD End Date:</span>
+                <apex:outputText value="{!endDateFormat}" />
+            </td>
+        </tr>
+    </table>
+
+		<apex:pageBlock>
+			<apex:pageBlockTable value="{!serviceDeliveriesData}" var="serviceDelivery">
+				<apex:column value="{!serviceDelivery.serviceDelivery.Name}" />
+				<apex:column value="{!serviceDelivery.serviceDelivery.Contact__r.Name}" />
+				<apex:column value="{!serviceDelivery.serviceDelivery.Service_Name__c}" />
+				<apex:column value="{!serviceDelivery.serviceDelivery.Service_Date__c}" />
+				<apex:column value="{!serviceDelivery.serviceDelivery.Duration__c}" />
+				<apex:column value="{!serviceDelivery.serviceDelivery.Short_Description__c}" />
+				<apex:column value="{!serviceDelivery.serviceDelivery.Billable__c}" />
+                <apex:column headerValue="Price" value="{!serviceDelivery.price}" />
+			</apex:pageBlockTable>
+            <table style="width: 100%; border: 0;">
+                <tr>
+                    <td style="text-align: right; font-weight: bold;">Total Price:</td>
+                    <td style="font-weight: bold; text-align: right;"><apex:outputText value="{!totalServiceDeliveriesPriceCurrency}"/></td>
+                </tr>
+            </table>
+		</apex:pageBlock>
+    
+
+</apex:page>
