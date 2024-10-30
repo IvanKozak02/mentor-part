@@ -1,0 +1,22 @@
+<template>
+    <lightning-quick-action-panel header="Service Deliveries">
+
+    <div class="slds-m-around_x-small slds-scrollable" style="height:340px">
+        <lightning-datatable
+                key-field="Id"
+                data={data}
+                onsave={handleSave}
+                draft-values={draftValues}
+                columns={columns}>
+        </lightning-datatable>
+    </div>
+    <div slot="footer">
+        <lightning-button
+            onclick={closeAction}
+            variant="neutral"
+            label="Cancel"
+        ></lightning-button>
+    </div>
+</lightning-quick-action-panel>
+
+</template>
