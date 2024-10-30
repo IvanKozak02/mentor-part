@@ -1,0 +1,80 @@
+<template>
+    <lightning-card title="Bulk Service Deliveries Creator">
+        <div class="slds-m-top_medium">
+            <lightning-progress-indicator current-step={currentStep}>
+                <lightning-progress-step label="Choose Contact" value="1"></lightning-progress-step>
+                <lightning-progress-step label="Choose one Program Assignment" value="2"></lightning-progress-step>
+                <lightning-progress-step label="Create Service Deliveries" value="3"></lightning-progress-step>
+            </lightning-progress-indicator>
+        </div>
+        <template if:true={isStepOne}>
+            <div class="slds-m-around_medium">
+                <div class="slds-p-around_medium">
+                    <lightning-record-picker
+                        label="Contacts"
+                        placeholder="Search Contacts..."
+                        onchange={handleContactPickerChange}
+                        object-api-name="Contact">
+                    </lightning-record-picker>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={isStepTwo}>
+            <div class="slds-m-top_medium slds-m-horizontal_x-large">
+                <p><lightning-formatted-text class="slds-text-heading_medium" value="Program Assignments"></lightning-formatted-text></p>
+                <lightning-datatable
+                    class="slds-p-around_medium"
+                    key-field="Id"
+                    data={data}
+                    onrowselection={handleRowSelection}
+                    max-row-selection="1"
+                    columns={columns}>
+                </lightning-datatable>
+                <div class="slds-m-vertical_medium slds-grid slds-grid_align-end">
+                    <lightning-button variant="brand" label="Next" onclick={handleNextClick}></lightning-button>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={isStepThree}>
+            <div class="slds-m-around_medium">
+                <div class="slds-p-horizontal_small">
+                    <lightning-input label="Contact" read-only type="text" value={paContactName}></lightning-input>
+                </div>
+                <div class="slds-p-horizontal_small">
+                    <lightning-input label="Program Assignment" read-only type="text" value={paName}></lightning-input>
+                </div>
+            </div>
+
+            <template for:each={serviceDeliveries} for:item="serviceDelivery">
+                <div class="slds-grid slds-grid_align-spread slds-gutters slds-m-around_medium slds-grid_vertical-align-end" key={serviceDelivery.id}>
+                    <div class="slds-p-horizontal_small">
+                        <lightning-input label="Service Name" type="text" onchange={handleInputChange} value={serviceDelivery.sdData.Service_Name__c} data-id={serviceDelivery.id} data-field-name="Service_Name__c"></lightning-input>
+                    </div>
+                    <div class="slds-p-horizontal_small">
+                        <lightning-input label="Service Date" type="date" onchange={handleInputChange} value={serviceDelivery.sdData.Service_Date__c} data-id={serviceDelivery.id} data-field-name="Service_Date__c"></lightning-input>
+                    </div>
+                    <div class=" slds-p-horizontal_small">
+                        <lightning-input label="Duration" type="number" min="0" onchange={handleInputChange} value={serviceDelivery.sdData.Duration__c} data-id={serviceDelivery.id} data-field-name="Duration__c"></lightning-input>
+                    </div>
+                    <div class="slds-p-horizontal_small slds-m-bottom_small">
+                        <lightning-input label="Billable" type="checkbox" onchange={handleBillableChange} checked={serviceDelivery.sdData.Billable__c} data-id={serviceDelivery.id} data-field-name="Billable__c"></lightning-input>
+                    </div>
+                    <div class="slds-p-horizontal_small">
+                        <lightning-button variant="destructive" label="Remove" onclick={handleDeleteServiceDelivery} data-id={serviceDelivery.id}></lightning-button>
+                    </div>
+                </div>
+            </template>
+            <div class="slds-grid slds-p-around_medium slds-grid_align-spread">
+                <div class="slds-p-horizontal_small">
+                    <lightning-button label="Back" onclick={handleBack}></lightning-button>
+                </div>
+                <div class="slds-p-horizontal_small">
+                    <lightning-button class="slds-m-right_medium" label="Add" onclick={addNewServiceDelivery}></lightning-button>
+                    <lightning-button label="Create Service Deliveries" variant="brand" onclick={handleCreateServiceDeliveries}></lightning-button>
+                </div>
+            </div>
+        </template>
+    </lightning-card>
+</template>
