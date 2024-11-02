@@ -5,7 +5,7 @@ export default class ShowPdfRelatedToRecordId extends LightningElement {
     @api recordId;
     @api heightInRem;
     @track error;
-    fileID;
+    fileURL;
     pdfFiles = [];
 
     @wire(getRelatedFilesByRecordId, { recordId: '$recordId' })
@@ -15,7 +15,7 @@ export default class ShowPdfRelatedToRecordId extends LightningElement {
             this.error = undefined;
             // Save the first related PDF's file ID to fileID            
             const fileIDs = Object.keys(data);
-            this.fileID =  fileIDs.length ? fileIDs[0] : undefined; 
+            this.fileURL =  fileIDs.length ?  '/sfc/servlet.shepherd/document/download/' + fileIDs[0] : undefined; 
         } else if (error) {
             this.error = error;
             this.pdfFiles = undefined; 
@@ -25,10 +25,9 @@ export default class ShowPdfRelatedToRecordId extends LightningElement {
 
     // Maps file ID and title to tab value and label
     get tabs() {
-        if (!this.fileID) return [];
+        if (!this.fileURL) return [];
         const tabs = [];
         const files = Object.entries(this.pdfFiles);
-        console.log(this.pdfFiles);
         files.forEach(file => {
             tabs.push({
                 value: file[0],
@@ -38,7 +37,7 @@ export default class ShowPdfRelatedToRecordId extends LightningElement {
         return tabs;
     }
 
-    setFileID(e) {
-        this.fileID = e.target.value;
+    setFileURL(e) {
+        this.fileURL = '/sfc/servlet.shepherd/document/download/' + e.target.value;
     }
 }

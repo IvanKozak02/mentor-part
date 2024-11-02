@@ -6,9 +6,12 @@
                 <lightning-input required="true" class="slds-m-bottom_small" name="endDate" type="date" label="End Date" value={endDate} onchange={handleDateChange}></lightning-input>
                 <lightning-input class="slds-m-bottom_small" type="checkbox" label="Include Non-billable SD?" checked={includeNonBillable} onchange={handleNonBillableStatusChange}></lightning-input>
             </div>
+            <template lwc:if={pdfPreviewURL}>
+                <c-show-pdf-by-id pdf-url={pdfPreviewURL}></c-show-pdf-by-id>
+            </template>
             <footer class="slds-m-around_medium slds-grid  slds-grid_align-end">
                 <lightning-button variant="neutral" label="Close" onclick={handleClose}></lightning-button>
-                <lightning-button class="slds-m-left_small" variant="brand" label="Generate Invoice" onclick={handleGenerateInvoice}></lightning-button>
+                <lightning-button class="slds-m-left_small" variant="brand" label={generateBtnLabel} onclick={handleGenerateInvoice}></lightning-button>
             </footer>
         </div>
     </lightning-card>

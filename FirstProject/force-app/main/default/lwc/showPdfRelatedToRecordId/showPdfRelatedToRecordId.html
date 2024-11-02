@@ -1,20 +1,23 @@
 <template>
-    <template if:true={fileID}>
-        <lightning-tabset variant="scoped">
-            <template for:each={tabs} for:item="tab">
-                <lightning-tab key={tab.value} label={tab.label} value={tab.value} onactive={setFileID}>
-                </lightning-tab>
+    <lightning-card title="PDF Preview">
+        <div class="slds-m-around_medium">
+            <template if:true={fileURL}>
+                <lightning-tabset variant="scoped">
+                    <template for:each={tabs} for:item="tab">
+                        <lightning-tab style="padding: 0;" key={tab.value} label={tab.label} value={tab.value} onactive={setFileURL}>
+                        </lightning-tab>
+                    </template>
+                </lightning-tabset>        
+                <c-show-pdf-by-id
+                    height-in-rem={heightInRem}
+                    pdf-url={fileURL}
+                ></c-show-pdf-by-id>
             </template>
-        </lightning-tabset>        
-        <c-show-pdf-by-id
-            height-in-rem={heightInRem}
-            file-id={fileID}
-        ></c-show-pdf-by-id>
-    </template>
-
-    <template if:false={fileID}>
-        <lightning-card><div>No related PDF file found.</div></lightning-card>
-    </template>
-
+        
+            <template if:false={fileURL}>
+                <lightning-card><div>No related PDF file found.</div></lightning-card>
+            </template>
+        </div>
+    </lightning-card>
 
 </template>
